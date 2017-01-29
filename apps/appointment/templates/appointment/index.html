@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="errors">
+        {% if messages %}
+          {% for msg in messages %}
+            <p>{{msg}}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-xs-10">
+          <h3>Welcome, {{data.current_user.first_name}}</h3>
+        </div>
+        <div class="col-xs-2">
+          <form class="" action="{% url 'login_ns:logout' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Log Out" class='btn btn-danger'>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>Today's Appointments</h2>
+          <table>
+            <tr>
+              <th>Tasks</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            {% for app in data.today_app %}
+              <tr>
+                <td>{{app.name}}</td>
+                <td>{{app.time|date:"h:i a"}}</td>
+                <td>{{app.status}}</td>
+                <td><a href="{% url 'appointment_ns:view_appointment' app.id %}">Edit</a><a href="{% url 'appointment_ns:delete_appointment' app.id %}">Delete</a></td>
+              </tr>
+            {% endfor %}
+          </table>
+
+          <h3>Other Appointments</h3>
+          <table>
+            <tr>
+              <th>Tasks</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+            {% for app in data.other_apps %}
+              <tr>
+                <td>{{app.name}}</td>
+                <td>{{app.time|date:"M d, Y"}}</td>
+                <td>{{app.time|date:"h:i a"}}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3-offset-9">
+          <form class="" action="{% url 'appointment_ns:create_appointment' %}" method="post">
+            {% csrf_token %}
+            Name: <input type="text" name="content" value=""><br>
+            Date: <input type="date" name="date_val" value=""><br>
+            Time: <input type="time" name="time_val" value=""><br>
+            <input type="submit" name="" value="Add Appointment" class="btn btn-primary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

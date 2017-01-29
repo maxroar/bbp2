@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="errors">
+        {% if messages %}
+          {% for msg in messages %}
+            <p>{{msg}}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-xs-10">
+        </div>
+        <div class="col-xs-1">
+          <form class="" action="{% url 'appointment_ns:index' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Dashboard" class='btn btn-primary'>
+          </form>
+        </div>
+        <div class="col-xs-1">
+          <form class="" action="{% url 'login_ns:logout' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Log Out" class='btn btn-danger'>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form class="" action="{% url 'appointment_ns:update_appointment' data.id %}" method="post">
+            {% csrf_token %}
+            Name: <input type="text" name="content" value="{{data.name}}"><brtime>
+            Status: <select class="" name="status">
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+              <option value="missed">Missed</option>
+            </select>
+            Date: <input type="date" name="date_val" value="{{date|date:"Y-m-d"}}"><br>
+            Time: <input type="time" name="time_val" value="{{time|time:"H:i:s"}}"><br>
+            <input type="submit" name="" value="Update Appointment" class="btn btn-primary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
