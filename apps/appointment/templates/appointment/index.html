@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2>Today's Appointments</h2>
-          <table>
+          <table class="table">
             <tr>
               <th>Tasks</th>
               <th>Time</th>
@@ -42,13 +42,13 @@
                 <td>{{app.name}}</td>
                 <td>{{app.time|date:"h:i a"}}</td>
                 <td>{{app.status}}</td>
-                <td><a href="{% url 'appointment_ns:view_appointment' app.id %}">Edit</a><a href="{% url 'appointment_ns:delete_appointment' app.id %}">Delete</a></td>
+                <td><a href="{% url 'appointment_ns:view_appointment' app.id %}">Edit</a> | <a href="{% url 'appointment_ns:delete_appointment' app.id %}">Delete</a></td>
               </tr>
             {% endfor %}
           </table>
 
           <h3>Other Appointments</h3>
-          <table>
+          <table class="table">
             <tr>
               <th>Tasks</th>
               <th>Date</th>
@@ -65,12 +65,18 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3-offset-9">
-          <form class="" action="{% url 'appointment_ns:create_appointment' %}" method="post">
+        <div class="col-xs-4 col-xs-offset-4">
+          <form class="well" action="{% url 'appointment_ns:create_appointment' %}" method="post">
             {% csrf_token %}
-            Name: <input type="text" name="content" value=""><br>
-            Date: <input type="date" name="date_val" value=""><br>
-            Time: <input type="time" name="time_val" value=""><br>
+            <div class="form-group">
+              Name: <input type="text" class="form-control" name="content" value="">
+            </div>
+            <div class="form-group">
+              Date: <input type="date" class="form-control" name="date_val" value="">
+            </div>
+            <div class="form-group">
+              Time: <input type="time" class="form-control" name="time_val" value="">
+            </div>
             <input type="submit" name="" value="Add Appointment" class="btn btn-primary">
           </form>
         </div>
